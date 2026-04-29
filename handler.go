@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func saveRun(c *gin.Context) {
@@ -34,7 +33,7 @@ func saveRun(c *gin.Context) {
 	_, err := runCollection.InsertOne(context.Background(), run)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H {
+		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to save run",
 		})
 
@@ -51,7 +50,7 @@ func getAllRuns(c *gin.Context) {
 	cursor, err := runCollection.Find(context.Background(), map[string]interface{}{})
 
 	if err != nil {
-		c.JSON(500, gin.H {
+		c.JSON(500, gin.H{
 			"error": "Failed to retrieve runs",
 		})
 
@@ -61,7 +60,7 @@ func getAllRuns(c *gin.Context) {
 	var runs []Run
 
 	if err := cursor.All(context.Background(), &runs); err != nil {
-		c.JSON(500, gin.H {
+		c.JSON(500, gin.H{
 			"error": "Failed to parse runs",
 		})
 		
